@@ -16,7 +16,7 @@ public class SelectArcade : MonoBehaviour
     public GameObject cinemachine;
 
 
-    string root = "d:/launcher/builds/";
+    string root = "c:/launcher/builds/";
 
     string[] builds ={
         "0/FMP.exe", //aidan
