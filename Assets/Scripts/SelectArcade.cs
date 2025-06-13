@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using TMPro;
+using UnityEngine.UI;
 
 
 public class SelectArcade : MonoBehaviour
@@ -15,8 +16,35 @@ public class SelectArcade : MonoBehaviour
     public GameObject cinemachine;
 
 
+    string root = "d:/launcher/builds/";
+
     string[] builds ={
-        "c:/launcher/builds/0-aidan/FMP.exe",
+        "0/FMP.exe", //aidan
+        "1/NetcodeForGameobjects-using-relays.exe",  //alfie
+        "2/Gelbound.exe", //cameron
+        "3/Y2FMPDemo.exe", //cody
+        "4/GravityShifter.exe", //jayden
+        "5/BloodMoon.exe", //logan
+        "6/Assassins Order project.exe",
+        "7/Red Revolution.exe", //matthew
+        "8/Download.exe", //oakleigh
+        "9/FMPyear2.exe", //sam
+        "10/Final FMP.exe", //tobi
+        "11/FMP year2.exe", //tyler carrick
+        "12/Sonic Blue Rush.exe", //charlie h
+        "13/UK Firefighting Sim FMP.exe", //charlie w
+        "14/Cold Storage.exe", //connor
+        "15/TTT (Tickets To Tomorrow).exe", //finley
+        "16/Monster Dungeon.exe", //harvey
+        "17/WIP(RIP).exe", //jayden
+        "18/FMP.exe", //leah
+        "19/ClassProject.exe", //luca
+        "20/the gates of peterborough.exe", //nate
+        "21/Boom.exe", //taylor
+        "22/Unit 8 Assignment.exe", //tommy
+        "23/Colossal's Grove.exe", //tyler
+        "24/FMP.exe", //will
+        "25/Flimsy Kart (FMP).exe", //william
 
 
 
@@ -43,10 +71,11 @@ public class SelectArcade : MonoBehaviour
     private Process process;
     public TextMeshProUGUI loadingText;
 
-    float textFlashTimer;
-    int index = 0;
     bool focus;
     bool gameIsLoading;
+
+    public TMP_Text selectText;
+    public GameObject leftArrow, rightArrow;
 
 
 
@@ -55,8 +84,6 @@ public class SelectArcade : MonoBehaviour
     {
         target = 0;
         loading = false;
-        textFlashTimer = 0;
-        index = 0;
         enableLoadingText = false;
         gameIsLoading = false;
     }
@@ -89,10 +116,13 @@ public class SelectArcade : MonoBehaviour
             return;
         }
 
+        FadeSelectText();
+
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            LoadGame();
             gameIsLoading = true;
+
+            LoadGame();
             return;
 
         }
@@ -153,11 +183,11 @@ public class SelectArcade : MonoBehaviour
         enableLoadingText = true;
 
         Application.runInBackground = true;
-        filename = builds[index];
-        print("loading + " + filename);
+        filename = root + builds[target];
+        print("loading " + filename);
         process = Process.Start(filename);
 
-        Invoke("UnfreezeLauncher", 10); // wait 10 seconds after loaded game is started before enabling launcher
+        Invoke("UnFreezeLauncher", 30); // wait a few seconds after loaded game is started before enabling the launcher again
 
     }
 
@@ -208,6 +238,29 @@ public class SelectArcade : MonoBehaviour
 
     void OnGUI()
     {
-            GUI.Label(new Rect(100, 100, 250, 250), "Focus= " + focus + "\ngame is loading=" + gameIsLoading);
+        //GUI.Label(new Rect(100, 100, 250, 250), "Focus= " + focus + "\ngame is loading=" + gameIsLoading);
+    }
+
+
+    float fade;
+    int fadeDir = 1;
+    void FadeSelectText()
+    {
+        Color c = new Color( 255, fade, 0 , 1);
+        selectText.color = c;
+
+        fade += Time.deltaTime*fadeDir*2;
+        if(  fade > 1f && fadeDir == 1 )
+        {
+            fadeDir = -1;
+        }
+        if (fade < 0.4f && fadeDir == -1)
+        {
+            fadeDir = 1;
+        }
+        //apply this fade to the arrows
+        leftArrow.GetComponent<RawImage>().color = new Color(0.2f, 1, 0, fade);
+        rightArrow.GetComponent<RawImage>().color = new Color(0.2f, 1, 0, fade);
+
     }
 }
