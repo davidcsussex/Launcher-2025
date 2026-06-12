@@ -1,13 +1,10 @@
 using System.Diagnostics;
-using System;
 using Unity.Cinemachine;
 using UnityEngine;
-using System.IO;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 
 public class SelectArcade : MonoBehaviour
@@ -19,32 +16,32 @@ public class SelectArcade : MonoBehaviour
     string root = "c:/launcher/builds/";
 
     string[] builds ={
-        "0/FMP.exe", //aidan
-        "1/NetcodeForGameobjects-using-relays.exe",  //alfie
-        "2/Gelbound.exe", //cameron
-        "3/Y2FMPDemo.exe", //cody
-        "4/GravityShifter.exe", //jayden
-        "5/BloodMoon.exe", //logan
-        "6/Assassins Order project.exe",
-        "7/Red Revolution.exe", //matthew
-        "8/Download.exe", //oakleigh
-        "9/FMPyear2.exe", //sam
-        "10/Final FMP.exe", //tobi
-        "11/FMP year2.exe", //tyler carrick
-        "12/Sonic Blue Rush.exe", //charlie h
-        "13/UK Firefighting Sim FMP.exe", //charlie w
-        "14/Cold Storage.exe", //connor
-        "15/TTT (Tickets To Tomorrow).exe", //finley
-        "16/Monster Dungeon.exe", //harvey
-        "17/WIP(RIP).exe", //jayden
-        "18/FMP.exe", //leah
-        "19/ClassProject.exe", //luca
-        "20/the gates of peterborough.exe", //nate
-        "21/Boom.exe", //taylor
-        "22/Unit 8 Assignment.exe", //tommy
-        "23/Colossal's Grove.exe", //tyler
-        "24/FMP.exe", //will
-        "25/Flimsy Kart (FMP).exe", //william
+        "0/fmp year 1.exe", 
+        "1/temporal tower.exe",  
+        "2/fmp project.exe", 
+        "3/unit 8 fmp.exe", 
+        "4/dirtywork_fmp.exe", 
+        "5/unit8_fmp.exe", 
+        "6/fmp.exe",
+        "7/fmp - mr snatcher.exe", 
+        "8/unit 8 fmp.exe", 
+        "9/guardian of a false paradise.exe", 
+        "10/stygian salvo.exe", 
+        "11/unit 8 fmp project.exe", 
+        "12/fmp year 1.exe", 
+        "13/unit 8 game.exe", 
+        "14/my fmp.exe", 
+        "15/TTT (Tickets To Tomorrow).exe",
+        "16/Monster Dungeon.exe", 
+        "17/WIP(RIP).exe", 
+        "18/FMP.exe", 
+        "19/ClassProject.exe", 
+        "20/the gates of peterborough.exe", 
+        "21/Boom.exe", 
+        "22/Unit 8 Assignment.exe", 
+        "23/Colossal's Grove.exe", 
+        "24/FMP.exe", 
+        "25/Flimsy Kart (FMP).exe", //jayden
 
 
 
@@ -54,9 +51,10 @@ public class SelectArcade : MonoBehaviour
 
 
 
-    public Transform[] targets;
     public GameObject[] cabinets;
-    
+    string[] cabinetNames = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29" };
+
+    Transform[]targets;
 
     int[] enabled0 = { 0, 1, 2 };
     int[] enabled1 = { 1, 2, 3 };
@@ -86,6 +84,41 @@ public class SelectArcade : MonoBehaviour
         loading = false;
         enableLoadingText = false;
         gameIsLoading = false;
+
+        targets = new Transform[24];
+
+        GameObject obj, lookObj;
+        Transform pos;
+        int targetCount = 0;
+        //set up target points
+        foreach (string cabinetName in cabinetNames )
+        {
+            obj = GameObject.Find( cabinetName );
+            if (obj != null)
+            {
+                print("found cabinet " + cabinetName);
+
+
+                //get child look point
+                pos = obj.transform.GetChild(2);    // get lookpoint which is third child
+                if( pos == null )
+                {
+                    print("not found");
+                }
+                else
+                {
+
+                    print("found target at ");
+                    targets[targetCount] = pos;
+                    targetCount++;
+                }
+            }
+
+        }
+
+
+        print("1 found " + targets.Length);
+        print("2 found " + targetCount);
     }
 
     // Update is called once per frame
